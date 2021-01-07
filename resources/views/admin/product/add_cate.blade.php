@@ -14,11 +14,14 @@
             @csrf
             <div class="form-group">
                 <label for="name">Tên danh mục *</label>
-                <input type="text" class="form-control" name="name" value="{!! old("name") !!}">
+                <input type="text" class="form-control" name="name">
             </div>
             <div class="form-group">
                 <label for="thumbnail">Hình ảnh danh mục *</label>
-                <input type="file" class="form-control" name="thumbnail">
+                <div class="col-md-8 mb-3">
+                    <img src="{!!asset("img/add-image.png")!!}" id="preview" alt="cate image" class="img-fluid">
+                </div>
+                <input type="file" class="form-control" id="pre"  name="thumbnail">
             </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
             <button type="reset" class="btn btn-danger">Hủy</button>
@@ -28,7 +31,21 @@
 
 @section('main-script')
     <script>
+          function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#preview').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
+    $("#pre").change(function(){
+        readURL(this);
+    });
     </script>
 @endsection
 

@@ -13,14 +13,8 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    protected $bzProduct;
-    public function __construct()
-    {
-        parent::__construct();
-        $this->bzProduct = new BzProduct;
-    }
 
-    //
+    #Region *** Product ***
     public function getListProduct() {
         $product = Product::orderBy('id', 'desc')->get();
         return view('admin.product.list_product', compact('product'));
@@ -29,11 +23,19 @@ class ProductController extends Controller
     public function getAddProduct() {
         return view('admin.product.add_product');
     }
+    #end region
 
 
     #Region *** Cate Product ***
-    public function getListCate() {
-        $cate = Category::orderBy('id', 'desc')->get();
+    public function getListCate(Request $request) {
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        if ($keyword != '') {
+            $cate = Category::where('name', 'like', '%'.$keyword.'%')
+            ->orWhere('id', $keyword)
+            ->get();
+        } else {
+            $cate = Category::orderBy('id', 'desc')->get();
+        }
         return view('admin.product.list_cate', compact('cate'));
     }
 
@@ -42,24 +44,51 @@ class ProductController extends Controller
     }
 
     public function postAddCate(CategoryRequest $request) {
-        $errorCode = $this->bzProduct->postAddCate($request);
-        if($errorCode == _ApiCode::SUCCESS)
-            return redirect()->back()->with(['success_message' => 'Thêm mới danh mục thành công']);
-        else
-            return redirect()->back()->with(['error_message' => 'Thêm mới danh mục không thành công']);
+        $cate = new Category();
+        $cate->name = $request->name;
+        $cate->status = 1;
+        if($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/category".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/category", $image);
+            $cate->thumbnail = $image;
+        } else $cate->thumbnail = '';
+        $cate->save();
+        return redirect()->back()->with(['success_message' => 'Thêm mới danh mục thành công']);
     }
 
     public function getEditCate($cateId) {
-        $data = $this->bzProduct->getEditCate($cateId);
-        return view('admin.product.edit_cate', compact('data'));
+        $cate = Category::find($cateId);
+        return view('admin.product.edit_cate', compact('cate'));
     }
 
-    public function postEditCate(Request $request){
-        $errorCode = $this->bzProduct->postEditCate($request);
-        if($errorCode == _ApiCode::SUCCESS)
-            return redirect()->back()->with(['success_message' => 'Chỉnh sửa danh mục thành công']);
-        else
-            return redirect()->back()->with(['error_message' => 'Chỉnh sửa danh mục không thành công']);
+    public function postEditCate(Request $request, $cateId){
+        $cate = Category::find($cateId);
+        $cate->name = $request->name;
+        $cate->status = 1;
+        if($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/category".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/category", $image);
+            unlink("storage/category/".$cate->thumbnail);
+            $cate->thumbnail = $image;
+        }
+        $cate->save();
+        return redirect()->back()->with(['success_message' => 'Chỉnh sửa danh mục thành công']);
+    }
+
+    public function getDeleteCate($cateId) {
+        $cate = Category::find($cateId);
+        $cate->update(['status' => -1]);
+        return redirect()->back()->with(['success_message' => 'Xóa danh mục thành công']);
     }
     #end Region
 }

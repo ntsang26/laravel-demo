@@ -69,14 +69,19 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
                 'uses' => 'ProductController@postAddCate'
             ]);
 
-            Route::get('edit-cate-product/{id?}', [
+            Route::get('edit-cate-product/{id}', [
                 'as' => 'admin.product.cate.getEditCate',
                 'uses' => 'ProductController@getEditCate'
             ]);
 
-            Route::post('edit-cate-product/{id?}', [
+            Route::post('edit-cate-product/{id}', [
                 'as' => 'admin.product.cate.postEditCate',
                 'uses' => 'ProductController@postEditCate'
+            ]);
+
+            Route::get('delete-cate-product/{id}', [
+                'as' => 'admin.product.cate.getDeleteCate',
+                'uses' => 'ProductController@getDeleteCate'
             ]);
         });
 

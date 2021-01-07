@@ -9,6 +9,7 @@
         <title>Admin</title>
         <link rel="shortcut icon" href="{!! asset("img/icon.png") !!}" type="image/x-icon">
         <link href="{{asset("plugin/admin/css/styles.css")}}" rel="stylesheet" />
+        <link href="{{asset("plugin/admin/css/main.css")}}" rel="stylesheet" />
         <link href="{{asset("plugin/admin/css/AdminLTE.min.css")}}" rel="stylesheet" />
         <link rel="stylesheet" href="{!!asset("plugin/dropzone/dropzone.css")!!}">
         <link rel="stylesheet" href="{!!asset("plugin/dropzone/basic.css")!!}">

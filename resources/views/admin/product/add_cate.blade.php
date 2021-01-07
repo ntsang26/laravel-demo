@@ -18,10 +18,15 @@
             </div>
             <div class="form-group">
                 <label for="thumbnail">Hình ảnh danh mục *</label>
-                <div class="col-md-8 mb-3">
-                    <img src="{!!asset("img/add-image.png")!!}" id="preview" alt="cate image" class="img-fluid">
+                <div class="uploade-zone">
+                    <label>
+                        <img src="{!!asset("img/add-image.png")!!}" id="preview" alt="cate image" class="pt-2">
+                        <input type="file" class="form-control col-1" id="pre" name="thumbnail" hidden>
+                    </label>
                 </div>
-                <input type="file" class="form-control" id="pre"  name="thumbnail">
+                {{-- <label class="col-md-8 mb-3">
+                    
+                </label> --}}
             </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
             <button type="reset" class="btn btn-danger">Hủy</button>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Business\Admin\BzUser;
-
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
@@ -33,11 +33,7 @@ class UserController extends Controller
             'password' => $request->password,
 
         ];
-        $login2 = [
-            'phone' => $request->phone,
-            'password' => $request->password,
-        ];
-        if((Auth::attempt($login) || Auth::attempt($login2)) && $this->bzUser->postLogin($request)){
+        if(Auth::attempt($login)){
             return redirect()->intended('/admin');
         } else{
             Auth::logout();
@@ -50,18 +46,106 @@ class UserController extends Controller
         return redirect()->route('admin.login');
     }
 
+    // public function postGetLogin($request){
+    //     $user = $this->getDetailUser($request->user_name);
+    //     if(isset($user)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    // public function getDetailUser($userName = ''){
+    //     return User::where('user_name',$userName)
+    //         ->first();
+    // }
+
     #end
 
     #*** List User
 
     # User Register
     public function getListUserRegister() {
-        $user = User::all();
+        $user = User::orderBy('id', 'desc')->get();
         return view('admin.users.list_user', compact('user'));
     }
 
     public function getAddUserRegister() {
-        return view('admin.user.add_register');
+        return view('admin.users.add_register');
+    }
+
+    public function postAddUserRegister(LoginRequest $request) {
+        $user = new User();
+        $user->user_name = $request->user_name;
+        $user->full_name = $request->full_name;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->password = bcrypt($request->password);
+        $user->verify_code = time().uniqid(true);
+        $user->role = \App\Http\DAL\DAL_Config::ROLE_USER_NORMAL;
+        $user->remember_token = bin2hex(random_bytes(20));
+        $user->status = \App\Http\DAL\DAL_Config::USER_STATUS_PUBLIC;
+
+        if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/userAvatar".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/userAvatar", $image);
+            $user->avatar = $image;
+        } else $user->avatar = '';
+        $user->save();
+        return redirect()->back()->with(['success_message' => 'Thêm người dùng thành công']);   
+    }
+
+    public function getEditUserRegister($userId) {
+        $user = User::find($userId);
+        return view('admin.users.edit_register', compact('user'));
+    }
+
+    public function postEditUserRegister(Request $request, $userId) {
+        $request->validate([
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],[
+            'avatar.image' => 'Tệp không đúng định dạng',
+            'avatar.mimes' => 'Ảnh phải là tệp thuộc loại: jpeg, png, jpg, gif, svg.',
+            'avatar.max' => 'Vui lòng chọn ảnh nhỏ hơn 2MB',
+        ]);
+        $user = User::find($userId);
+        $user->full_name = $request->full_name;
+        $user->address = $request->address;
+
+        if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/userAvatar".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/userAvatar", $image);
+            unlink("storage/userAvatar/", $user->avatar);
+            $user->avatar = $image;
+        }
+
+        if($request->isCheck == 'on') {
+            $this->validate($request, [
+                'password' => 'required|min:8|max:30',
+            ], [
+                'password.required' => 'Vui lòng điền mật khẩu',
+                'password.min' => 'Mật khẩu phải có dộ dài từ 8 - 30 kí tự',
+                'password.max' => 'Mật khẩu phải có dộ dài từ 8 - 30 kí tự',
+            ]);
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        return redirect()->back()->with(['success_message' => 'Sửa người dùng thành công']);
+    }
+
+    public function getDeleteUserRegister($userId){
+        $user = User::find($userId);
+        $user->update(['status' => -1]);
+        return redirect()->back()->with(['success_message' => 'Xóa người dùng thành công']);
     }
     #end
 

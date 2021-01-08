@@ -28,8 +28,4 @@ class User extends Model
         return $this->belongsTo('App\Models\Role_user', 'id', 'role_id');
     }
 
-    public function shops() {
-        return $this->hasOne('App\Models\Shops', 'account_id', 'id');
-    }
-
 }

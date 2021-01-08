@@ -22,18 +22,12 @@ var x = setInterval(function() {
     }
 }, 1000);
 
-var mySwiper = new Swiper('.swiper-container', {
+var swiper = new Swiper('.swiper-container', {
     // Optional parameters
-    // loop: true,
-    slidesPerView: 3,
+    loop: true,
+    slidesPerView: 4,
     centeredSlides: true,
     spaceBetween: 30,
-  
-    // If we need pagination
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
   
     // Navigation arrows
     navigation: {

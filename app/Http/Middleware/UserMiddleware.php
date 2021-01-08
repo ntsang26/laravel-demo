@@ -16,17 +16,17 @@ class UserMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                Session::put('url.intended',$request);
-                return redirect()->guest(route('admin.login'));
-            }
-        }
-
-        return $next($request);
+        if (Auth::check()) {
+            $user = Auth::user();
+            if 
+            ($user->role == \App\Http\DAL\DAL_Config::ROLE_USER_SP_ADMIN
+                || $user->role == \App\Http\DAL\DAL_Config::ROLE_USER_ADMIN
+                || $user->role == \App\Http\DAL\DAL_Config::ROLE_USER_MOD
+            ) return $next($request);
+            else return redirect()->guest(route('admin.login'))
+            ->with(['error_message'=>'Bạn không có quyền truy cập vào trang này']);
+        } else return redirect()->guest(route('admin.login'));
     }
 }

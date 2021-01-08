@@ -36,9 +36,6 @@
                                 <a href="#" class="text-primary">
                                     Chỉnh sửa
                                 </a>
-                                <a href="#" class="ml-3 text-danger">
-                                    Xóa
-                                </a>
                             </td>
                         </tr>
                 @else

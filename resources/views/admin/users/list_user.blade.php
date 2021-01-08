@@ -25,20 +25,24 @@
         </thead>
         <tbody>
             @foreach ($user as $item)
-                @if ($item->role == 11)
-                    <tr>
-                        <td scope="row">{!!$item->id!!}</td>
-                        <td>{!!$item->full_name!!}</td>
-                        <td>{!!$item->phone!!}</td>
-                        <td>
-                            <a href="#" class="text-primary">
-                                Chỉnh sửa
-                            </a>
-                            <a href="#" class="ml-3 text-danger">
-                                Xóa
-                            </a>
-                        </td>
-                    </tr>
+                @if ($item->status == 1)
+                    @if ($item->role == 11)
+                        <tr>
+                            <td scope="row">{!!$item->id!!}</td>
+                            <td>{!!$item->full_name!!}</td>
+                            <td>{!!$item->phone!!}</td>
+                            <td>
+                                <a href="{!!route('admin.user.getEditUserRegister', $item->id)!!}" class="text-primary">
+                                    Chỉnh sửa
+                                </a>
+                                <a href="{!!route('admin.user.getDeleteUserRegister', $item->id)!!}" class="ml-3 text-danger">
+                                    Xóa
+                                </a>
+                            </td>
+                        </tr>
+                    @else
+                        <div></div>
+                    @endif
                 @else
                     <div></div>
                 @endif

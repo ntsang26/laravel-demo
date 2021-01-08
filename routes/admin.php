@@ -32,7 +32,7 @@ Route::group(['namespace' => 'Admin'], function () {
 });
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin',
-    'middleware' => 'user' ], function () {
+    'middleware' => 'user'], function () {
 
     Route::get('/',[
         'as' => 'admin.dashboard',
@@ -114,6 +114,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
 
     // Region user
     Route::group(['prefix' => 'user'], function () {
+        #*** User Register ***
         Route::get('list-user-register', [
             'as' => 'admin.user.getListUserRegister',
             'uses' => 'UserController@getListUserRegister'
@@ -129,10 +130,28 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
             'uses' => 'UserController@postAddUserRegister'
         ]);
 
+        Route::get('edit-user-register/{id}', [
+            'as' => 'admin.user.getEditUserRegister',
+            'uses' => 'UserController@getEditUserRegister'
+        ]);
+
+        Route::post('edit-user-register/{id}', [
+            'as' => 'admin.user.postEditUserRegister',
+            'uses' => 'UserController@postEditUserRegister'
+        ]);
+
+        Route::get('delete-user-register/{id}', [
+            'as' => 'admin.user.getDeleteUserRegister',
+            'uses' => 'UserController@getDeleteUserRegister'
+        ]);
+        #end
+
+        #*** User Manager
         Route::get('list-user-manager', [
             'as' => 'admin.user.getListUserManager',
             'uses' => 'UserController@getListUserManager'
         ]);
+        #end
     });
     // End region
 

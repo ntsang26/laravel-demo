@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helper\_ApiCode;
-use App\Http\Business\Admin\BzProduct;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\ProductRequest;
 
 use App\Models\Product;
 use App\Models\Category;
@@ -16,13 +16,83 @@ class ProductController extends Controller
 
     #Region *** Product ***
     public function getListProduct() {
-        $product = Product::orderBy('id', 'desc')->get();
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        if ($keyword != '') {
+            $product = Product::where('name', 'like', '%'.$keyword.'%')
+            ->orWhere('id', $keyword)
+            ->get();
+        } else {
+            $product = Product::orderBy('id', 'desc')->get();
+        }
         return view('admin.product.list_product', compact('product'));
     }
 
     public function getAddProduct() {
-        return view('admin.product.add_product');
+        $cate = Category::all();
+        return view('admin.product.add_product', compact('cate'));
     }
+
+    public function postAddProduct(ProductRequest $request) {
+        $product = new Product();
+        $product->category_id = $request->category_id;
+        $product->prd_code = 'SP'.time();
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->sale_off = $request->sale_off;
+        $product->status = 1;
+        $product->type = 1;
+        if($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/product".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/product", $image);
+            $product->thumbnail = $image;
+        } else $product->thumbnail = '';
+        $product->save();
+        return redirect()->back()->with(['success_message' => 'Thêm mới sản phẩm thành công']);
+    }
+
+    public function getEditProduct($prdId) {
+        $cate = Category::all();
+        $prd = Product::find($prdId);
+        return view('admin.product.edit_product', compact('cate','prd'));
+    }
+
+    public function postEditProduct(ProductRequest $request, $prdId) {
+        $product = Product::find($prdId);
+        $product->category_id = $request->category_id;
+        $product->prd_code = 'SP'.time();
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->sale_off = $request->sale_off;
+        $product->status = 1;
+        $product->type = 1;
+        if($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $name = $file->getClientOriginalExtension();
+            $image = time().'_'.$name;
+            while(file_exists("storage/product".$image)){
+                $image = time().'_'.$name;
+            }
+            $file->move("storage/product", $image);
+            unlink("storage/product/".$product->thumbnail);
+            $product->thumbnail = $image;
+        }
+        $product->save();
+        return redirect()->back()->with(['success_message' => 'Thêm mới sản phẩm thành công']);
+    }
+
+    public function getDeleteProduct($prdId) {
+        $product = Product::find($prdId);
+        $product->update(['status' => -1]);
+        return redirect()->back()->with(['success_message' => 'Xóa sản phẩm thành công']);
+    }
+
     #end region
 
 
@@ -66,7 +136,7 @@ class ProductController extends Controller
         return view('admin.product.edit_cate', compact('cate'));
     }
 
-    public function postEditCate(Request $request, $cateId){
+    public function postEditCate(CategoryRequest $request, $cateId){
         $cate = Category::find($cateId);
         $cate->name = $request->name;
         $cate->status = 1;

@@ -6,10 +6,20 @@
             <h3 class="text-muted">Sản phẩm <small class="text-primary">Danh sách</small></h3>
         </div>
         <div class="col-md-8 text-right">
-            <button type="button" class="btn btn-primary">
-                <a href="{!! route('admin.product.add') !!}" class="text-white text-decoration-none">Thêm mới</a>
-            </button>
+            <a href="{!! route('admin.product.add') !!}" class="btn btn-success text-white text-decoration-none">
+                Thêm mới
+            </a>
         </div>
+    </div>
+    <div>
+        <form action="" method="get">
+            <div class="input-group mb-3 col-3">
+                <input type="text" class="form-control" placeholder="Tìm kiếm..." name="keyword" id="keyword">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Lọc</button>
+                </div>
+              </div>
+        </form>
     </div>
 @endsection
 
@@ -17,21 +27,35 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col-1">#</th>
-                <th scope="col-5">Hình ảnh</th>
-                <th scope="col-3">Tên sản phẩm</th>
-                <th scope="col-3">Danh mục</th>
-                <th scope="col-3">Thao tác</th>
+                <th scope="col">#</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Danh mục</th>
+                <th scope="col">Thao tác</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($product as $item)
-                <tr>
-                    <th scope="row">{!!$item->id!!}</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
+                @if ($item->status == 1)
+                    <tr>
+                        <th scope="row">{!!$item->id!!}</th>
+                        <td>
+                            <img src="{!!asset("storage/product/".$item->thumbnail)!!}" alt="img product" height="60">
+                        </td>
+                        <td>{!!$item->name!!}</td>
+                        <td>{!!$item->category->name!!}</td>
+                        <td>
+                            <a href="{!! route('admin.product.edit', $item->id) !!}">
+                                Chỉnh sửa
+                            </a>
+                            <a class="ml-3 text-danger" href="{!! route('admin.product.delete', $item->id) !!}">
+                                Xóa
+                            </a>
+                        </td>
+                    </tr>
+                @else
+                    <div></div>
+                @endif
             @endforeach
         </tbody>
         <thead>
@@ -39,7 +63,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Hình ảnh</th>
                 <th scope="col">Tên sản phẩm</th>
-                <th scope="col-3">Danh mục</th>
+                <th scope="col">Danh mục</th>
                 <th scope="col">Thao tác</th>
             </tr>
         </thead>

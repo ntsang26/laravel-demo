@@ -3,12 +3,7 @@
 @section('main-header')
 <div class="row my-4">
     <div class="col-md-4">
-        <h3 class="text-muted">Sản phẩm<small class="text-primary">Thêm mới</small></h3>
-    </div>
-    <div class="col-md-8 text-right">
-        <a href="{!! route('admin.product.cate.getList') !!}" class="btn btn-primary text-white text-decoration-none">
-            Danh mục
-        </a>
+        <h3 class="text-muted">Sản phẩm <small class="text-primary">Edit</small></h3>
     </div>
 </div>
 @endsection
@@ -18,33 +13,38 @@
         <form class="col-8" method="post" action="" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="sale_off">Danh mục</label>
+                <label for="category_id">Danh mục</label>
                 <select class="custom-select" name="category_id">
                     @foreach ($cate as $item)
-                        <option value="{!!$item->id!!}">{!!$item->name!!}</option>
+                        <option 
+                            value="{!!$item->id!!}"
+                            @if ($prd->category_id == $item->id)
+                                {!!"selected"!!}
+                            @endif
+                        >{!!$item->name!!}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="name">Tên sản phẩm</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" value="{!!$prd->name!!}">
             </div>
             <div class="form-group">
                 <label for="price">Giá sản phẩm</label>
-                <input type="number" class="form-control" name="price">
+                <input type="number" class="form-control" name="price" value="{!!$prd->price!!}">
             </div>
             <div class="form-group">
                 <label for="thumbnail">Hình ảnh sản phẩm</label>
                 <div class="uploade-zone">
                     <label>
-                        <img src="{!!asset("img/add-image.png")!!}" id="preview" alt="cate image" class="pt-2">
+                        <img src="{!!asset("storage/product/".$prd->thumbnail)!!}" id="preview" alt="cate image" class="pt-2">
                         <input type="file" class="form-control col-1" id="pre" name="thumbnail" hidden>
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="description">Mô tả</label>
-                <input type="text" class="form-control" name="description">
+                <textarea name="description" class="form-control" id="description" rows="5">{!!$prd->description!!}</textarea>
             </div>
             <div class="form-group">
                 <label for="sale_off">Khuyến mãi</label>
@@ -53,7 +53,8 @@
                     <option value="1">Không</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Thêm</button>
+            <button type="submit" class="btn btn-primary">Sửa</button>
+            <button type="reset" class="btn btn-danger" onclick="goBack()">Hủy</button>
         </form>
     </div>
 @endsection
@@ -77,3 +78,4 @@
     });
     </script>
 @endsection
+

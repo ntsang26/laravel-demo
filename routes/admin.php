@@ -41,6 +41,8 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
 
     // Region Admin Product
     Route::group(['prefix' => 'product'], function () {
+
+        #*** Product ***
         Route::group([], function () {
             Route::get('list-product', [
                 'as' => 'admin.product.list',
@@ -51,8 +53,30 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
                 'as' => 'admin.product.add',
                 'uses' => 'ProductController@getAddProduct'
             ]);
-        });
 
+            Route::post('add-product', [
+                'as' => 'admin.product.add',
+                'uses' => 'ProductController@postAddProduct'
+            ]);
+
+            Route::get('edit-product/{id}', [
+                'as' => 'admin.product.edit',
+                'uses' => 'ProductController@getEditProduct'
+            ]);
+
+            Route::post('edit-product/{id}', [
+                'as' => 'admin.product.edit',
+                'uses' => 'ProductController@postEditProduct'
+            ]);
+
+            Route::get('delete-product/{id}', [
+                'as' => 'admin.product.delete',
+                'uses' => 'ProductController@getDeleteProduct'
+            ]);
+        });
+        #end
+
+        #*** Cate Product ***
         Route::group([], function () {
             Route::get('list-cate-product', [
                 'as' => 'admin.product.cate.getList',
@@ -84,18 +108,39 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
                 'uses' => 'ProductController@getDeleteCate'
             ]);
         });
-
+        #end
     });
     // End Region
 
     // Region user
     Route::group(['prefix' => 'user'], function () {
         Route::get('list-user-register', [
-            'as' => 'admin.user.getListRegister',
+            'as' => 'admin.user.getListUserRegister',
             'uses' => 'UserController@getListUserRegister'
+        ]);
+
+        Route::get('add-user-register', [
+            'as' => 'admin.user.getAddUserRegister',
+            'uses' => 'UserController@getAddUserRegister'
+        ]);
+
+        Route::post('add-user-register', [
+            'as' => 'admin.user.postAddUserRegister',
+            'uses' => 'UserController@postAddUserRegister'
+        ]);
+
+        Route::get('list-user-manager', [
+            'as' => 'admin.user.getListUserManager',
+            'uses' => 'UserController@getListUserManager'
         ]);
     });
     // End region
+
+    #*** Region Frontend
+    Route::group(['prefix' => ''], function () {
+        
+    });
+    #end
     
 });
 

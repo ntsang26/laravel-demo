@@ -113,7 +113,7 @@ a {
 .category {
     background-color: #252525;
     color: #fff;
-    padding: .3rem 2rem;
+    padding: .4rem 2rem;
 }
 
 .category ul {
@@ -122,12 +122,14 @@ a {
 }
 
 .category ul li {
-    margin-right: 1rem;
+    margin-right: 1.2rem;
+    vertical-align: middle;
 }
 
 .category ul li a {
     color: #fff;
     text-transform: uppercase;
+    font-size: 14px;
 }
 
 .category i {
@@ -398,7 +400,7 @@ a {
 .cdt-product.product-sale .cdt-product__show-price .price {
     background-color: transparent;
     font-size: 14px;
-    font-weight: 500 !important;
+    font-weight: 550 !important;
     line-height: 14px;
     color: #cb1c22;
     width: auto;
@@ -548,5 +550,61 @@ ul {
     text-align: center;
     padding: 10px 2px;
     clear: both;
+}
+
+.fa-arrow-circle-right,
+.fa-arrow-circle-left {
+	position: absolute;
+	top: 50%;
+	width: calc(var(--swiper-navigation-size)/ 44 * 27);
+	height: var(--swiper-navigation-size);
+	margin-top: calc(-1 * var(--swiper-navigation-size)/ 2);
+	z-index: 10;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    color: #3d6880 ;
+    font-size: 40px;
+}
+
+.fa-arrow-circle-right.swiper-button-disabled,
+.fa-arrow-circle-left.swiper-button-disabled {
+	opacity: .35;
+	cursor: auto;
+	pointer-events: none
+}
+
+.fa-arrow-circle-right:after,
+.fa-arrow-circle-left:after {
+	font-family: swiper-icons;
+	font-size: var(--swiper-navigation-size);
+	text-transform: none!important;
+	letter-spacing: 0;
+	text-transform: none;
+	font-variant: initial;
+	line-height: 1
+}
+
+.fa-arrow-circle-left,
+.swiper-container-rtl .fa-arrow-circle-right {
+	left: 10px;
+	right: auto
+}
+
+.fa-arrow-circle-right,
+.swiper-container-rtl .fa-arrow-circle-left {
+	right: 10px;
+	left: auto
+}
+
+.fa-arrow-circle-right.swiper-button-white,
+.fa-arrow-circle-left.swiper-button-white {
+	--swiper-navigation-color: #ffffff
+}
+
+.fa-arrow-circle-right.swiper-button-black,
+.fa-arrow-circle-left.swiper-button-black {
+	--swiper-navigation-color: #000000
 }
 

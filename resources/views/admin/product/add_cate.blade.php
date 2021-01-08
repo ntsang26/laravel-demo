@@ -24,9 +24,6 @@
                         <input type="file" class="form-control col-1" id="pre" name="thumbnail" hidden>
                     </label>
                 </div>
-                {{-- <label class="col-md-8 mb-3">
-                    
-                </label> --}}
             </div>
             <button type="submit" class="btn btn-primary">Thêm</button>
             <button type="reset" class="btn btn-danger">Hủy</button>

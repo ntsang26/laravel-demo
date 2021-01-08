@@ -14,11 +14,11 @@
                 </a>
                 <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{!!route('admin.user.getListUserRegister')!!}">
                             <i class="fas fa-user"></i>
                             &nbsp;Người dùng đăng ký
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{!!route('admin.user.getListUserManager')!!}">
                             <i class="fas fa-user-secret"></i>
                             &nbsp;Quản trị viên
                         </a>

@@ -13,6 +13,7 @@ class HomeController extends Controller
     //
     public function index() {
         $category = Category::all();
-        return view('frontend.layout_master', compact('category'));
+        $product = Product::all();
+        return view('frontend.layout_master', compact('category', 'product'));
     }
 }

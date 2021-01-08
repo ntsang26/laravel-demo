@@ -6,6 +6,8 @@ class _ApiCode
 {
     const SUCCESS = 200;
 
+    const STATUS_SUCCESS = 1;
+
     //login status
     const RESET_TOKEN = 201;
     const RESET_LOGIN = 202;

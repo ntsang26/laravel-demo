@@ -10,7 +10,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav col-5">
+            <ul class="navbar-nav col-7">
                 <div class="input-group my-2 my-lg-0">
                     <input class="form-control" type="text"
                         placeholder="Nhập tên điện thoại, máy tính, phụ kiện... cần tìm">

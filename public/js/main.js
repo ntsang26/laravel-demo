@@ -24,7 +24,7 @@ var x = setInterval(function() {
 
 var mySwiper = new Swiper('.swiper-container', {
     // Optional parameters
-    loop: true,
+    // loop: true,
     slidesPerView: 3,
     centeredSlides: true,
     spaceBetween: 30,
@@ -37,8 +37,8 @@ var mySwiper = new Swiper('.swiper-container', {
   
     // Navigation arrows
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: '.fa-arrow-circle-right',
+      prevEl: '.fa-arrow-circle-left',
     },
   
     // And if we need scrollbar

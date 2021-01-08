@@ -9,6 +9,8 @@ use App\Http\Business\Admin\BzUser;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
 
@@ -20,6 +22,7 @@ class UserController extends Controller
     }
 
     //
+    #*** Login ***
     public function getLogin() {
         return view('admin.login');
     }
@@ -46,5 +49,29 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('admin.login');
     }
+
+    #end
+
+    #*** List User
+
+    # User Register
+    public function getListUserRegister() {
+        $user = User::all();
+        return view('admin.users.list_user', compact('user'));
+    }
+
+    public function getAddUserRegister() {
+        return view('admin.user.add_register');
+    }
+    #end
+
+    # User Manager
+    public function getListUserManager() {
+        $user = User::all();
+        return view('admin.users.list_user_manager', compact('user'));
+    }
+    #end
+
+    #end
     
 }

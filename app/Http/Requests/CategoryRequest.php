@@ -28,4 +28,23 @@ class CategoryRequest extends FormRequest
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Vui lòng điền tên danh mục',
+            'name.min' => 'Tên danh mục phải có độ dài từ 3 - 50 kí tự',
+            'name.max' => 'Tên danh mục phải có độ dài từ 3 - 50 kí tự',
+            'name.unique' => 'Tên danh mục đã tồn tại',
+            'thumbnail.required' => 'Vui lòng chọn ảnh',
+            'thumbnail.image' => 'Tệp không đúng định dạng',
+            'thumbnail.mimes' => 'Ảnh phải là tệp thuộc loại: jpeg, png, jpg, gif, svg.',
+            'thumbnail.max' => 'Vui lòng chọn ảnh nhỏ hơn 2MB'
+        ];
+    }
 }

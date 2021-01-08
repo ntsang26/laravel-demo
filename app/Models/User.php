@@ -25,7 +25,7 @@ class User extends Model
     public $timestamps = true;
 
     public function role_user() {
-        return $this->belongsTo('App\Models\Role_user', 'role_id', 'id');
+        return $this->belongsTo('App\Models\Role_user', 'id', 'role_id');
     }
 
     public function shops() {

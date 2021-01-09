@@ -23,14 +23,11 @@
             <div class="form-group">
                 <label for="role">Cấp bậc</label>
                 <?php 
-                    $role = \App\Models\Role_user::all(); 
-                    $count = 0;
+                    $role = \Spatie\Permission\Models\Permission::all();
                 ?>
                 <select class="form-control" name="role" id="role">
                     @foreach ($role as $item)
-                        <?php if($count == 3) break; ?>
-                        <option value="{!!$item->role_id!!}">{!!$item->role_name!!}</option>
-                        <?php $count++; ?>
+                        <option value="{!!$item->id!!}">{!!$item->name!!}</option>
                     @endforeach
                 </select>
             </div>

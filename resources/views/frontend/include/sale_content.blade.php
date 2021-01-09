@@ -8,7 +8,7 @@
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         @foreach ($product as $item)
-                            <div class="swiper-slide ">
+                            <div class="swiper-slide">
                                 <div class="cdt-product product-sale">
                                     <div class="cdt-product__img">
                                         <a href="#">

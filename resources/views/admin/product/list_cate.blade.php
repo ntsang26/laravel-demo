@@ -37,27 +37,22 @@
     </thead>
     <tbody>
             @foreach ($cate as $item)
-                @if ($item->status == 1)
-                    <tr>
-                        <th scope="row">{!! $item->id !!}</th>
-                        <td>{!! $item->name !!}</td>
-                        <td>
-                            <img src="{!! asset("storage/category/".$item->thumbnail) !!}" alt="cate image" height="60px">
-                        </td>
-                        <td>
-                            <a href="{!! route('admin.product.cate.getEditCate', $item->id) !!}">
-                                Chỉnh sửa
-                            </a>
-                            <a class="ml-3 text-danger" href="{!! route('admin.product.cate.getDeleteCate', $item->id) !!}">
-                                Xóa
-                            </a>
-                        </td>
-                    </tr>
-                @else
-                    <div></div>
-                @endif
+                <tr>
+                    <th scope="row">{!! $item->id !!}</th>
+                    <td>{!! $item->name !!}</td>
+                    <td>
+                        <img src="{!! asset("storage/category/".$item->thumbnail) !!}" alt="cate image" height="60px">
+                    </td>
+                    <td>
+                        <a href="{!! route('admin.product.cate.getEditCate', $item->id) !!}">
+                            Chỉnh sửa
+                        </a>
+                        <a class="ml-3 text-danger" href="{!! route('admin.product.cate.getDeleteCate', $item->id) !!}">
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
             @endforeach
-        
     </tbody>
     <thead>
         <tr>

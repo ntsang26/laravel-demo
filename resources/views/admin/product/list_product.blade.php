@@ -36,26 +36,22 @@
         </thead>
         <tbody>
             @foreach ($product as $item)
-                @if ($item->status == 1)
-                    <tr>
-                        <th scope="row">{!!$item->id!!}</th>
-                        <td>
-                            <img src="{!!asset("storage/product/".$item->thumbnail)!!}" alt="img product" height="60">
-                        </td>
-                        <td>{!!$item->name!!}</td>
-                        <td>{!!$item->category->name!!}</td>
-                        <td>
-                            <a href="{!! route('admin.product.edit', $item->id) !!}">
-                                Chỉnh sửa
-                            </a>
-                            <a class="ml-3 text-danger" href="{!! route('admin.product.delete', $item->id) !!}">
-                                Xóa
-                            </a>
-                        </td>
-                    </tr>
-                @else
-                    <div></div>
-                @endif
+                <tr>
+                    <th scope="row">{!!$item->id!!}</th>
+                    <td>
+                        <img src="{!!asset("storage/product/".$item->thumbnail)!!}" alt="img product" height="60">
+                    </td>
+                    <td>{!!$item->name!!}</td>
+                    <td>{!!$item->category->name!!}</td>
+                    <td>
+                        <a href="{!! route('admin.product.edit', $item->id) !!}">
+                            Chỉnh sửa
+                        </a>
+                        <a class="ml-3 text-danger" href="{!! route('admin.product.delete', $item->id) !!}">
+                            Xóa
+                        </a>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
         <thead>

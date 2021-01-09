@@ -5,24 +5,20 @@
                 <?php $count = 0; ?>
                 @foreach ($category as $item)
                     <?php if($count == 12) break; ?>
-                        @if ($item->status == 1)
-                            <div class="col-md-2 col-6 col-border">
-                                <a href="#" class="ct-item-a">
-                                    <div class="cate-item text-center">
-                                        <picture class="picture">
-                                            <img src="{{asset("storage/category/".$item->thumbnail)}}"
-                                                class="img-fluid"
-                                                alt="Điện thoại">
-                                        </picture>
-                                        <div class="cate-item-name">
-                                            {!! $item->name !!}
-                                        </div>
+                        <div class="col-md-2 col-6 col-border">
+                            <a href="#" class="ct-item-a">
+                                <div class="cate-item text-center">
+                                    <picture class="picture">
+                                        <img src="{{asset("storage/category/".$item->thumbnail)}}"
+                                            class="img-fluid"
+                                            alt="Điện thoại">
+                                    </picture>
+                                    <div class="cate-item-name">
+                                        {!! $item->name !!}
                                     </div>
-                                </a>
-                            </div>
-                        @else
-                            <div></div>
-                        @endif
+                                </div>
+                            </a>
+                        </div>
                     <?php $count++; ?>
                 @endforeach
             </div>

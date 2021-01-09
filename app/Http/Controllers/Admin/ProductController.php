@@ -18,11 +18,14 @@ class ProductController extends Controller
     public function getListProduct() {
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
         if ($keyword != '') {
-            $product = Product::where('name', 'like', '%'.$keyword.'%')
+            $product = Product::where('status', 1)
+            ->where('name', 'like', '%'.$keyword.'%')
             ->orWhere('id', $keyword)
             ->get();
         } else {
-            $product = Product::orderBy('id', 'desc')->get();
+            $product = Product::orderBy('id', 'desc')
+            ->where('status', 1)
+            ->get();
         }
         return view('admin.product.list_product', compact('product'));
     }
@@ -100,11 +103,14 @@ class ProductController extends Controller
     public function getListCate(Request $request) {
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
         if ($keyword != '') {
-            $cate = Category::where('name', 'like', '%'.$keyword.'%')
+            $cate = Category::where('status', 1)
+            ->where('name', 'like', '%'.$keyword.'%')
             ->orWhere('id', $keyword)
             ->get();
         } else {
-            $cate = Category::orderBy('id', 'desc')->get();
+            $cate = Category::orderBy('id', 'desc')
+            ->where('status', 1)
+            ->get();
         }
         return view('admin.product.list_cate', compact('cate'));
     }

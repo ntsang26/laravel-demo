@@ -151,6 +151,26 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin',
             'as' => 'admin.user.getListUserManager',
             'uses' => 'UserController@getListUserManager'
         ]);
+
+        Route::get('add-user-manager', [
+            'as' => 'admin.user.getAddUserManager',
+            'uses' => 'UserController@getAddUserManager'
+        ]);
+
+        Route::post('add-user-manager', [
+            'as' => 'admin.user.postAddUserManager',
+            'uses' => 'UserController@postAddUserManager'
+        ]);
+
+        Route::get('edit-user-manager/{id}', [
+            'as' => 'admin.user.getEditUserManager',
+            'uses' => 'UserController@getEditUserManager'
+        ]);
+
+        Route::post('edit-user-manager/{id}', [
+            'as' => 'admin.user.postEditUserManager',
+            'uses' => 'UserController@postEditUserManager'
+        ]);
         #end
     });
     // End region

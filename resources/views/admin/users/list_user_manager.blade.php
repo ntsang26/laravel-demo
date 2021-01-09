@@ -6,7 +6,7 @@
             <h3 class="text-muted">Quản trị viên <small class="text-primary">List</small></h3>
         </div>
         <div class="col-md-8 text-right">
-            <a href="{!! route('admin.product.cate.getList') !!}" class="btn btn-primary text-white text-decoration-none">
+            <a href="{!! route('admin.user.getAddUserManager') !!}" class="btn btn-primary text-white text-decoration-none">
                 Thêm quản trị viên
             </a>
         </div>
@@ -26,21 +26,17 @@
         </thead>
         <tbody>
             @foreach ($user as $item)
-                @if ($item->role == 1 || $item->role == 2 || $item->role == 3)
-                        <tr>
-                            <td scope="row">{!!$item->id!!}</td>
-                            <td>{!!$item->full_name!!}</td>
-                            <td>{!!$item->phone!!}</td>
-                            <td>{!!$item->role_user->role_des!!}</td>
-                            <td>
-                                <a href="#" class="text-primary">
-                                    Chỉnh sửa
-                                </a>
-                            </td>
-                        </tr>
-                @else
-                    <div></div>
-                @endif
+                <tr>
+                    <td scope="row">{!!$item->id!!}</td>
+                    <td>{!!$item->user_name!!}</td>
+                    <td>{!!$item->phone!!}</td>
+                    <td>{!! $item->roleUser->role_des!!}</td>
+                    <td>
+                        <a href="#" class="text-primary">
+                            Chỉnh sửa
+                        </a>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
         <thead>

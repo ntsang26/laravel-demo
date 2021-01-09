@@ -12,11 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserTableSeeder::class,
-            Role_userSeeder::class,
+            // UserTableSeeder::class,
+            // Role_userSeeder::class,
             // ArticleTableSeeder::class,
             // CategoryTableSeeder::class,
             // CustomerTableSeeder::class,
+            RolesAndPermissionsSeeder::class
         ]);
     }
 }
@@ -50,5 +51,33 @@ class Role_userSeeder extends Seeder{
                 'role_status' => 1,
             ),
         ]);
+    }
+}
+
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+class RolesAndPermissionsSeeder extends Seeder
+{
+    public function run()
+    {
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        $superAdmin = Role::create(['name' => 'super-admin']);
+        $admin = Role::create(['name' => 'admin']);
+        Role::create(['name' => 'moderator']);
+        Role::create(['name' => 'normal']);
+
+        \App\Models\User::find(1)->assignRole('super-admin');
+        \App\Models\User::find(2)->assignRole('admin');
+
+        $editor = Permission::create(['name' => 'editor']);
+        $sale = Permission::create(['name' => 'sale']);
+        $saleManage = Permission::create(['name' => 'sale manager']);
+        $customer = Permission::create(['name' => 'customer care']);
+        $support = Permission::create(['name' => 'support']);
+
+        $superAdmin->syncPermissions([$editor, $sale, $customer, $support,$saleManage]);
+        $admin->syncPermissions([$editor, $sale, $customer, $support,$saleManage]);
+
     }
 }

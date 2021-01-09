@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Business\Admin\BzUser;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\DAL\DAL_Config;
 
 use App\Models\User;
 
@@ -65,7 +67,10 @@ class UserController extends Controller
 
     # User Register
     public function getListUserRegister() {
-        $user = User::orderBy('id', 'desc')->get();
+        $user = User::orderBy('id', 'desc')
+        ->where('status', DAL_Config::USER_STATUS_PUBLIC)
+        ->where('role', DAL_Config::ROLE_USER_NORMAL)
+        ->get();
         return view('admin.users.list_user', compact('user'));
     }
 
@@ -73,7 +78,7 @@ class UserController extends Controller
         return view('admin.users.add_register');
     }
 
-    public function postAddUserRegister(LoginRequest $request) {
+    public function postAddUserRegister(UserRequest $request) {
         $user = new User();
         $user->user_name = $request->user_name;
         $user->full_name = $request->full_name;
@@ -81,9 +86,9 @@ class UserController extends Controller
         $user->address = $request->address;
         $user->password = bcrypt($request->password);
         $user->verify_code = time().uniqid(true);
-        $user->role = \App\Http\DAL\DAL_Config::ROLE_USER_NORMAL;
+        $user->role = DAL_Config::ROLE_USER_NORMAL;
         $user->remember_token = bin2hex(random_bytes(20));
-        $user->status = \App\Http\DAL\DAL_Config::USER_STATUS_PUBLIC;
+        $user->status = DAL_Config::USER_STATUS_PUBLIC;
 
         if($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -151,8 +156,35 @@ class UserController extends Controller
 
     # User Manager
     public function getListUserManager() {
-        $user = User::all();
+        $user = User::orderBy('id', 'desc')
+        ->where('status', DAL_Config::USER_STATUS_PUBLIC)
+        ->whereIn('role', [
+            DAL_Config::ROLE_USER_SP_ADMIN,
+            DAL_Config::ROLE_USER_ADMIN,
+            DAL_Config::ROLE_USER_MOD
+        ])
+        ->get();
         return view('admin.users.list_user_manager', compact('user'));
+    }
+
+    public function getAddUserManager() {
+        return view('admin.users.add_manager');
+    }
+
+    public function postAddUserManager(Request $request) {
+        $user = new User();
+        $user->user_name = $request->user_name;
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+        $user->password = bcrypt(123456);
+        $user->avatar = '';
+        $user->full_name = ucfirst($request->user_name);
+        $user->address = '';
+        $user->verify_code = time().uniqid(true);
+        $user->remember_token = bin2hex(random_bytes(20));
+        $user->status = DAL_Config::USER_STATUS_PUBLIC;
+        $user->save();
+        return redirect()->back()->with(['success_message' => 'Thêm quản trị viên thành công']);
     }
     #end
 

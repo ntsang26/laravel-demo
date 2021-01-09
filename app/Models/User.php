@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Model
 {
+    use HasRoles;
     //
+    protected $guard_name = 'web';
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -22,10 +26,15 @@ class User extends Model
         'status',
         'remember_token',
     ];
+    // protected $with = ['roleUser'];
+    // protected $append = ['role_user'];
     public $timestamps = true;
 
-    public function role_user() {
-        return $this->belongsTo('App\Models\Role_user', 'id', 'role_id');
-    }
+    // public function roleUser() {
+    //     return $this->belongsTo('App\Models\Role_user', 'role', 'role_id');
+    // }
 
+    public function getRoleUserAttribute() {
+        return $this->belongsTo('App\Models\Role_user', 'role', 'role_id')->first();
+    }
 }

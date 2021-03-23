@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->string('thumbnail');
             $table->string('description');
-            $table->integer('type');
             $table->integer('sale_off');
             $table->integer('status');
             $table->timestamps();

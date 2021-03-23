@@ -17,11 +17,10 @@ class Product extends Model
         'thumbnail',
         'description',
         'sale_off',
-        'type',
         'status'
     ];
 
-    public function category() {
-        return $this->belongsTo('App\Models\Category', 'category_id', 'id');
+    public function getCateAttribute() {
+        return $this->belongsTo('App\Models\Category', 'category_id', 'id')->first();
     }
 }

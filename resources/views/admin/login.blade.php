@@ -1,124 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<title>Login</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="{{asset("plugin/login/images/icons/favicon.ico")}}" />
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/bootstrap/css/bootstrap.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/animate/animate.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/css-hamburgers/hamburgers.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/animsition/css/animsition.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/select2/select2.min.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/vendor/daterangepicker/daterangepicker.css")}}">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/css/util.css")}}">
-	<link rel="stylesheet" type="text/css" href="{{asset("plugin/login/css/main.css")}}">
-	<!--===============================================================================================-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{asset("plugin/login-page/css/style.css")}}">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
-<body style="background-color: #666666;">
-
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<form class="login100-form validate-form" action="{!! route('admin.login') !!}" method="post">
+<body>
+    <section>
+        <div class="imgBox">
+            <img src="{{asset("plugin/login-page/img/bg.jpg")}}" alt="background">
+        </div>
+        <div class="contentBox">
+            <div class="formBox">
+                <h2>Login</h2>
+				<form action="{!! route('admin.login') !!}" method="post">
 					@csrf
-					<span class="login100-form-title p-b-43">
-						Login to continue	
-					</span>
-
-
-					<div class="wrap-input100 validate-input">
-						<input class="input100" type="text" name="user_name" required>
-						<span class="focus-input100"></span>
-						<span class="label-input100">User Name or Phone Number</span>
+                    <div class="inputBox">
+                        <span>User Name</span>
+                        <input class="form-input" type="text" name="user_name" required>
 					</div>
+					
 					@if (Session::has('error_message'))
-						<span class="error">{{Session::get('error_message')}}</span>
+						<div class="alert show">
+							<span class="fas fa-exclamation-circle"></span>
+							<span class="msg">Error: {{Session::get('error_message')}}</span>
+							<div class="close-btn">
+								<span class="fas fa-times"></span>
+							</div>
+						</div>
 					@endif
 
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" name="password" required>
-						<span class="focus-input100"></span>	
-						<span class="label-input100">Password</span>
-					</div>
+                    <div class="inputBox">
+                        <span>Password</span>
+                        <input class="form-input" type="password" name="password" required>
+                    </div>
+                    <div class="remember">
+                        <label>
+                            <input type="checkbox">
+                            Remember Me
+                        </label>
+                    </div>
+                    <div class="inputBox">
+                        <input class="submit" type="submit" value="Log in" name="">
+                    </div>
+                    <div class="signUpBox">
+                        <p>Don't have an account? <a href="signUp.html">Sign up</a></p>
+                    </div>
+                </form>
 
-					<div class="flex-sb-m w-full p-t-3 p-b-32">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								Remember me
-							</label>
-						</div>
-
-						<div>
-							<a href="#" class="txt1">
-								Forgot Password?
-							</a>
-						</div>
-					</div>
-
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit">
-							Login
-						</button>
-					</div>
-
-					<div class="text-center p-t-46 p-b-20">
-						<span class="txt2">
-							or sign up using
-						</span>
-					</div>
-
-					<div class="login100-form-social flex-c-m">
-						<a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-							<i class="fa fa-facebook-f" aria-hidden="true"></i>
-						</a>
-
-						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-							<i class="fa fa-twitter" aria-hidden="true"></i>
-						</a>
-					</div>
-				</form>
-
-				<div class="login100-more" style="background-image: url('{{asset("plugin/login/images/bg-02.jpg")}}');">
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/jquery/jquery-3.2.1.min.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/animsition/js/animsition.min.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/bootstrap/js/popper.js")}}"></script>
-	<script src="{{asset("plugin/login/vendor/bootstrap/js/bootstrap.min.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/select2/select2.min.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/daterangepicker/moment.min.js")}}"></script>
-	<script src="{{asset("plugin/login/vendor/daterangepicker/daterangepicker.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/vendor/countdowntime/countdowntime.js")}}"></script>
-	<!--===============================================================================================-->
-	<script src="{{asset("plugin/login/js/main.js")}}"></script>
-
+                <div class="mediaBox">
+                    <h3>Login with social media</h3>
+                    <ul>
+                        <li>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
+        </div>
+	</section>
+	
+	<script>
+		$('.close-btn').click(function(){
+			$('.alert').removeClass("show");
+			$('.alert').addClass("hide");
+			$('.alert').addClass("hideAll");
+      	});
+	</script>
 </body>
-
 </html>

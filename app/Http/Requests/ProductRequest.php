@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'name' => 'required|min:2|max:50|unique:products,name',
             'price' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description' => 'required|min:10|max:255',
+            'description' => 'required|min:5|max:255',
         ];
     }
 
@@ -49,8 +49,8 @@ class ProductRequest extends FormRequest
             'thumbnail.mimes' => 'Ảnh phải là tệp thuộc loại: jpeg, png, jpg, gif, svg.',
             'thumbnail.max' => 'Vui lòng chọn ảnh nhỏ hơn 2MB',
             'description.required' => 'Vui lòng điền mô tả',
-            'description.min' => 'Mô tả phải có độ dài từ 10 - 255 kí tự',
-            'description.max' => 'Mô tả phải có độ dài từ 10 - 255 kí tự'
+            'description.min' => 'Mô tả phải có độ dài từ 5 - 255 kí tự',
+            'description.max' => 'Mô tả phải có độ dài từ 5 - 255 kí tự'
         ];
     }
 }

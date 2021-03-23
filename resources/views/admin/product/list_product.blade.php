@@ -42,7 +42,7 @@
                         <img src="{!!asset("storage/product/".$item->thumbnail)!!}" alt="img product" height="60">
                     </td>
                     <td>{!!$item->name!!}</td>
-                    <td>{!!$item->category->name!!}</td>
+                    <td>{!!$item->cate->name!!}</td>
                     <td>
                         <a href="{!! route('admin.product.edit', $item->id) !!}">
                             Chỉnh sửa

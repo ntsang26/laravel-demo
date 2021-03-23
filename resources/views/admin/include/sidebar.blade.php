@@ -37,7 +37,7 @@
                         </a>
                         <a class="nav-link" href="{!! route('admin.product.list') !!}">
                             <i class="fas fa-shopping-cart"></i>
-                            &nbsp;Dòng sản phẩm
+                            &nbsp;Sản phẩm
                         </a>
                     </nav>
                 </div>

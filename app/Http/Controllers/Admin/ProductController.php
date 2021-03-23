@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\ProductRequest;
-
 use App\Models\Product;
 use App\Models\Category;
 
@@ -38,13 +37,12 @@ class ProductController extends Controller
     public function postAddProduct(ProductRequest $request) {
         $product = new Product();
         $product->category_id = $request->category_id;
-        $product->prd_code = 'SP'.time();
+        $product->prd_code = 'SP'.rand(1000,9999);
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->sale_off = $request->sale_off;
         $product->status = 1;
-        $product->type = 1;
         if($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $name = $file->getClientOriginalExtension();
@@ -65,16 +63,13 @@ class ProductController extends Controller
         return view('admin.product.edit_product', compact('cate','prd'));
     }
 
-    public function postEditProduct(ProductRequest $request, $prdId) {
+    public function postEditProduct(Request $request, $prdId) {
         $product = Product::find($prdId);
         $product->category_id = $request->category_id;
-        $product->prd_code = 'SP'.time();
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
         $product->sale_off = $request->sale_off;
-        $product->status = 1;
-        $product->type = 1;
         if($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $name = $file->getClientOriginalExtension();
@@ -87,7 +82,7 @@ class ProductController extends Controller
             $product->thumbnail = $image;
         }
         $product->save();
-        return redirect()->back()->with(['success_message' => 'Thêm mới sản phẩm thành công']);
+        return redirect()->route('admin.product.list')->with(['success_message' => 'Sửa sản phẩm thành công']);
     }
 
     public function getDeleteProduct($prdId) {
@@ -119,7 +114,7 @@ class ProductController extends Controller
         return view('admin.product.add_cate');
     }
 
-    public function postAddCate(CategoryRequest $request) {
+    public function postAddCate(Request $request) {
         $cate = new Category();
         $cate->name = $request->name;
         $cate->status = 1;
@@ -142,10 +137,9 @@ class ProductController extends Controller
         return view('admin.product.edit_cate', compact('cate'));
     }
 
-    public function postEditCate(CategoryRequest $request, $cateId){
+    public function postEditCate(Request $request, $cateId){
         $cate = Category::find($cateId);
         $cate->name = $request->name;
-        $cate->status = 1;
         if($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $name = $file->getClientOriginalExtension();
@@ -158,7 +152,7 @@ class ProductController extends Controller
             $cate->thumbnail = $image;
         }
         $cate->save();
-        return redirect()->back()->with(['success_message' => 'Chỉnh sửa danh mục thành công']);
+        return redirect()->route('admin.product.cate.getList')->with(['success_message' => 'Chỉnh sửa danh mục thành công']);
     }
 
     public function getDeleteCate($cateId) {
